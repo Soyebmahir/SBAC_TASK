@@ -41,9 +41,9 @@ const formDataValidationSchema = z.object({
         domainInformation: domainInformationValidationSchema,
         ipInformation: ipInformationValidationSchema,
         applicantSignature: signatureValidationSchema,
-        managerSignature: signatureValidationSchema,
-        itSignature: signatureValidationSchema,
-        itImplement: signatureValidationSchema
+        managerSignature: signatureValidationSchema.optional(),
+        itSignature: signatureValidationSchema.optional(),
+        itImplement: signatureValidationSchema.optional()
 
     })
 })
