@@ -30,15 +30,17 @@ export const loginUserController = catchAsync(async (req, res) => {
   })
 })
 export const getMe = catchAsync(async (req, res) => {
+  console.log("string");
   // const token = req.headers.authorization;
 
   // if (!token) {
   //   throw new AppError(httpStatus.NOT_FOUND, 'Token not found !');
   // }
 
-  const { userId } = req.user;
+  const { employeeId } = req.user;
+  console.log(req.user);
 
-  const result = await getMeFromDb(userId);
+  const result = await getMeFromDb(employeeId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

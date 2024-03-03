@@ -1,10 +1,19 @@
-import React from "react";
-
+/* eslint-disable no-extra-boolean-cast */
 import { useForm } from "react-hook-form";
 import FieldSet from "../Field/FieldSet";
 import Field from "../Field/Field";
+import { baseURL } from "../../Configs/libs";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
+  const { setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/categories";
   const {
     register,
     handleSubmit,
@@ -12,34 +21,68 @@ const LoginForm = () => {
     setError,
   } = useForm();
 
-  const submitForm = (formData) => {
+  const submitForm = async (formData) => {
     console.log(formData);
-    const user = { email: "x@example.com", password: "123456789" };
-
-    const found =
-      formData.email === user.email && formData.password === user.password;
-
-    if (!found) {
-      setError("root.random", {
-        message: `User with email '${formData.email}' is not found`,
-        type: "random",
+    setLoading(true);
+    try {
+      const response = await fetch(`${baseURL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+      const data = await response.json();
+      console.log(data);
+      if (data?.success) {
+        setUser(data?.data?.user);
+        toast.success(data.message);
+        setLoading(false);
+        navigate(from, { replace: true });
+        localStorage.setItem("accessToken", data?.data?.accessToken);
+        localStorage.setItem("email", data?.data?.user?.email);
+        localStorage.setItem("role", data.data.user?.role);
+        localStorage.setItem("employeeId", data.data?.user.employeeId);
+      } else {
+        toast.error(data.message);
+        setLoading(false);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+      console.log(err);
+      setLoading(false);
     }
+    // // const user = { employeeId: "x@example.com", password: "123456789" };
+
+    // const found =
+    //   formData.employeeId === user.employeeId && formData.password === user.password;
+
+    // if (!found) {
+    //   setError("root.random", {
+    //     message: `User with employeeId '${formData.employeeId}' is not found`,
+    //     type: "random",
+    //   });
+    // }
   };
   return (
-    <div className="flex flex-col justify-center items-center">
-      <form onSubmit={handleSubmit(submitForm)}>
+    <div className="flex flex-col justify-center items-center ">
+      <form
+        onSubmit={handleSubmit(submitForm)}
+        className="border bg-gray-200 mt-20"
+      >
         <FieldSet label="Enter Login Details">
-          <Field label="Email" error={errors.email}>
+          <Field label="EmployeeId" error={errors.employeeId}>
             <input
-              {...register("email", { required: "Email is required." })}
+              {...register("employeeId", {
+                required: "employeeId is required.",
+              })}
               className={`p-2 border box-border w-[300px] rounded-md ${
-                !!errors.email ? "border-red-500" : "border-gray-200"
+                !!errors.employeeId ? "border-red-500" : "border-gray-200"
               }`}
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter email address"
+              type="employeeId"
+              name="employeeId"
+              id="employeeId"
+              placeholder="Enter employeeId address"
             />
           </Field>
           <Field label="Password" error={errors.password}>
@@ -47,7 +90,7 @@ const LoginForm = () => {
               {...register("password", {
                 required: "Password is required.",
                 minLength: {
-                  value: 8,
+                  value: 6,
                   message: "Your password must be at least 8 characters.",
                 },
               })}
@@ -61,12 +104,13 @@ const LoginForm = () => {
             />
           </Field>
         </FieldSet>
-        <div>{errors?.root?.random?.message}</div>
+        <div className="text-red-800">{errors?.root?.random?.message}</div>
         <Field>
-          <button className="text-md text-white cursor-pointer p-1 border rounded-lg bg-purple-500 m-auto">
+          <button className="text-md text-white cursor-pointer p-1 border rounded-lg bg-purple-500 m-auto mb-4">
             Login
           </button>
         </Field>
+        <NavLink to={"/register"}>No Account ? Register !</NavLink>
       </form>
     </div>
   );

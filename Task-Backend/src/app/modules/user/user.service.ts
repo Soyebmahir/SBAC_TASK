@@ -72,13 +72,13 @@ export const loginUserService = async (payload: TUserLogin) => {
     user: rest,
   }
 }
-export const getMeFromDb = async (userId: string) => {
+export const getMeFromDb = async (employeeId: string) => {
   // const decoded = verifyToken(token, config.jwt_access_secret as string);
   // const { userId, role } = decoded;
 
   let result = null;
 
-  result = await User.findOne({ id: userId })
+  result = await User.findOne({ employeeId })
 
 
   return result;

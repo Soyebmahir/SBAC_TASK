@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../assets/img/SBAC_Bank_Ltd.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
   return (
     <div>
       <div className="flex justify-start items-center font-bold">
@@ -11,44 +13,64 @@ const Navbar = () => {
           className="flex flex-grow justify-center gap-10  
          items-center font-bold"
         >
-          <li>Home</li>
           <li>
             <NavLink
-              to={"form"}
+              to={"/"}
               className={({ isActive }) =>
                 isActive
-                  ? "active text-[#8d2713] hover:text-white transition-colors duration-700 ease-in-out "
+                  ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
                   : "  "
               }
               style={{
                 fontSize: "16px",
               }}
             >
-              Form
+              Home
             </NavLink>
           </li>
+          {user?.role === "normalUser" && (
+            <li>
+              <NavLink
+                to={"form"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
+                    : "  "
+                }
+                style={{
+                  fontSize: "16px",
+                }}
+              >
+                Form
+              </NavLink>
+            </li>
+          )}
+
+          {user?.role === "normalUser" && (
+            <li>
+              <NavLink
+                to={"Status"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
+                    : "  "
+                }
+                style={{
+                  fontSize: "16px",
+                  fontFamily: "Helvetica-W01-Light, Helvetica-W02-Light, ",
+                }}
+              >
+                Status
+              </NavLink>
+            </li>
+          )}
+
           <li>
             <NavLink
-              to={"form"}
+              to={"Manager"}
               className={({ isActive }) =>
                 isActive
-                  ? "active text-[#8d2713] hover:text-white transition-colors duration-700 ease-in-out "
-                  : "  "
-              }
-              style={{
-                fontSize: "16px",
-                fontFamily: "Helvetica-W01-Light, Helvetica-W02-Light, ",
-              }}
-            >
-              Status
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"form"}
-              className={({ isActive }) =>
-                isActive
-                  ? "active text-[#8d2713] hover:text-white transition-colors duration-700 ease-in-out "
+                  ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
                   : "  "
               }
               style={{
@@ -61,10 +83,10 @@ const Navbar = () => {
           </li>
           <li>
             <NavLink
-              to={"form"}
+              to={"it"}
               className={({ isActive }) =>
                 isActive
-                  ? "active text-[#8d2713] hover:text-white transition-colors duration-700 ease-in-out "
+                  ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
                   : "  "
               }
               style={{
@@ -75,6 +97,7 @@ const Navbar = () => {
               IT
             </NavLink>
           </li>
+          {user.email && <button onClick={logOut}>Logout</button>}
         </ul>
       </div>
     </div>
