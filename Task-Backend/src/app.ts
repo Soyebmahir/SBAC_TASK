@@ -17,7 +17,7 @@ app.use('/api/v1', router)
 
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('SBAC BANK ')
+    res.send('SERVER OF SBAC BANK is RUNNING.... ')
 })
 app.use(globalErrorHandler);
 

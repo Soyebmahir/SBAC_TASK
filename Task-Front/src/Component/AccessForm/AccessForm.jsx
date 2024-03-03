@@ -35,7 +35,7 @@ const AccessForm = () => {
   };
   // console.log(accessCheckboxes);
   return (
-    <div>
+    <div className="pb-44">
       <div className=" max-w-[1000px] mx-auto ">
         <h1 className="text-3xl font-bold">Access Request Form</h1>
         <form action="">

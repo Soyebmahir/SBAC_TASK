@@ -1,26 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
-import { Model } from 'mongoose';
+
 import { Schema, model } from "mongoose";
-type TAccessType = {
+export type TAccessType = {
     domainUser: boolean;
     emailAddress: boolean;
     internet: boolean;
     usb: boolean
 }
-type TDomain = {
+export type TDomain = {
     isDomain: boolean;
     domainName: string;
     isEmail: boolean;
     emailAddress: string;
 
 }
-type TIp = {
+export type TIp = {
 
     ipAddress: string;
     subnetMusk: string;
     defaultGetWay: string;
-    internet: boolean
+    isInternet: boolean
 
 }
 
@@ -53,24 +53,7 @@ export interface TFormData {
     itSignature?: TApproveConfirm;
     itImplement: TApproveConfirm
 
-
-
-
 }
 
-export interface UserModel extends Model<TUser> {
-    isUserExistsByemployeeId(employeeId: string): Promise<TUser>;
-    isUserExistsWithPassword(employeeId: string): Promise<TUser>;
-    isPasswordMatched(
-        plainTextPassword: string,
-        hashedPassword: string,
-    ): Promise<boolean>;
 
-}
 
-export type TUserLogin = {
-    employeeId: string;
-    password: string;
-};
-
-export type TUserRole = keyof typeof USER_ROLE;

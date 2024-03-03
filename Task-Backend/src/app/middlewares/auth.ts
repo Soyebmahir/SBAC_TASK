@@ -34,15 +34,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
             throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
         }
 
-        if (
-            user.passwordChangedAt &&
-            User.isJWTIssuedBeforePasswordChanged(
-                user.passwordChangedAt,
-                iat as number,
-            )
-        ) {
-            throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized Access!');
-        }
+
 
         if (requiredRoles && !requiredRoles.includes(role)) {
             throw new AppError(

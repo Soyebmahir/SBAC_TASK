@@ -5,9 +5,9 @@ import Navbar from "../../Component/Navbar/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="">
+    <div className="px-10">
       <Navbar />
-      <div className="   ">
+      <div className="">
         <Outlet />
       </div>
       {/* <Footer /> */}
