@@ -4,7 +4,7 @@ import sendResponse from "../../utils/sendResponse";
 import { formDataServices } from "./formData.services";
 
 const createFormData = catchAsync(async (req, res) => {
-
+    // console.log('controller', req.body);
     const result = await formDataServices.createFormDataIntoDb(req.body);
 
     sendResponse(res, {

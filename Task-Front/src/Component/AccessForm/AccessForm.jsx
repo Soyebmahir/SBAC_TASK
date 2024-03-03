@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getTodayDate } from "../../utils/date";
 import SubmitButton from "../button/SubmitButton";
+import { baseURL } from "../../Configs/libs";
 
 const AccessForm = () => {
   const [accessCheckboxes, setAccessCheckboxes] = useState({
@@ -48,8 +49,8 @@ const AccessForm = () => {
   const handleIsInternetChange = () => {
     setIsInternetChecked(!isInternetChecked);
   };
-  const handleIsApplicantSign = () => {
-    setIsApplicantSign(!isApplicantSign);
+  const handleIsApplicantSign = (sign) => {
+    setIsApplicantSign({ ...isApplicantSign, ["sign"]: sign });
   };
 
   // common function to get restInput data
@@ -59,23 +60,68 @@ const AccessForm = () => {
       [fieldName]: value,
     }));
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Collect all data from the form state
-    const formData = {
-      accessCheckboxes,
-      isDomainChecked,
-      isEmailChecked,
-      isInternetChecked,
-      isApplicantSign,
-      restInput,
+    // const formData = {
+    //   accessCheckboxes,
+    //   isDomainChecked,
+    //   isEmailChecked,
+    //   isInternetChecked,
+    //   isApplicantSign,
+    //   restInput,
+    // };
+    const reformData = {
+      accessType: {
+        domainUser: accessCheckboxes["Domain User"],
+        emailAddress: accessCheckboxes["Email Address"],
+        internet: accessCheckboxes["Internet Access"],
+        usb: accessCheckboxes["USB Access"],
+      },
+      employeeId: restInput?.employeeId,
+      contactNumber: restInput?.contactNumber,
+      firstName: restInput?.firstName,
+      lastName: restInput?.lastName,
+      office: restInput?.office,
+      designation: restInput?.designation,
+      requisition: getTodayDate(),
+      justification: restInput?.justification,
+      domainInformation: {
+        isDomain: isDomainChecked,
+        isEmail: isEmailChecked,
+      },
+      ipInformation: {
+        ipAddress: restInput?.ipAddress,
+        subnetMusk: restInput?.subnetMask,
+        defaultGetWay: restInput?.defaultGetWay,
+        isInternet: isInternetChecked,
+      },
+      applicantSignature: {
+        date: getTodayDate(),
+        isAgree: isApplicantSign.sign,
+        userId: "65e458cdcc4ba5c26d3868ae",
+      },
     };
+    console.log(reformData);
 
-    // Log the collected data (you can replace this with your desired action)
-    console.log("Form Data:", formData);
+    try {
+      const response = await fetch(`${baseURL}/formData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reformData),
+      });
 
-    // Add logic here to send the data to your backend or perform other actions
+      const result = await response.json();
+
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+
+    // console.log("Form Data:", formData);
   };
   return (
     <div className="pb-44">
@@ -312,8 +358,10 @@ const AccessForm = () => {
                     type="checkbox"
                     className="border border-gray-200 flex-grow p-1"
                     style={{ width: "1.5em", height: "1.5em" }}
-                    checked={isApplicantSign}
-                    onChange={handleIsApplicantSign}
+                    checked={isApplicantSign.sign}
+                    onChange={() =>
+                      handleIsApplicantSign(!isApplicantSign.sign)
+                    }
                   />
                 </div>
                 <div className="flex justify-center items-center border border-gray-200">
@@ -409,6 +457,10 @@ const AccessForm = () => {
             <SubmitButton
               className="text-secondary w-[150px] mx-auto my-3 tracking-widest py-[6px] text-lg capitalize"
               disabled={
+                // !accessCheckboxes["Domain User"] === true ||
+                // !accessCheckboxes["Email Address"] === true ||
+                // !accessCheckboxes["Internet Access"] === true ||
+                // !accessCheckboxes["USB Access"] === true ||
                 !restInput?.employeeId ||
                 !restInput?.contactNumber ||
                 !restInput?.lastName ||

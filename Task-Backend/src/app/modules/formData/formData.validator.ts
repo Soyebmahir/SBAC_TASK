@@ -9,9 +9,9 @@ const accessTypeValidationSchema = z.object({
 })
 const domainInformationValidationSchema = z.object({
     isDomain: z.boolean(),
-    domainName: z.string(),
+    domainName: z.string().optional(),
     isEmail: z.boolean(),
-    emailAddress: z.string()
+    emailAddress: z.string().optional()
 
 })
 const ipInformationValidationSchema = z.object({

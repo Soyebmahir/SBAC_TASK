@@ -10,7 +10,7 @@ const app: Application = express();
 
 //parser
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:5173'] }));
+app.use(cors({ origin: ['http://localhost:5173', 'https://sbacbank.netlify.app'] }));
 //application route
 app.use('/api/v1', router)
 
