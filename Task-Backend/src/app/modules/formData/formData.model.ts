@@ -1,18 +1,22 @@
 import { Schema, model } from "mongoose";
-import { TAccessType, TDomain, TFormData, TIp } from "./formData.interface";
+import { TAccessType, TApproveConfirm, TDomain, TFormData, TIp } from "./formData.interface";
 
 const accessTypeSchema = new Schema<TAccessType>({
     domainUser: {
         type: Boolean,
+        default: false
     },
     emailAddress: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     internet: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     usb: {
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 })
 const domainInformationSchema = new Schema<TDomain>({
@@ -32,7 +36,7 @@ const domainInformationSchema = new Schema<TDomain>({
         type: String
     }
 })
-const itInformationSchema = new Schema<TIp>({
+const ipInformationSchema = new Schema<TIp>({
     ipAddress: {
         type: String,
 
@@ -43,8 +47,23 @@ const itInformationSchema = new Schema<TIp>({
     defaultGetWay: {
         type: String
     },
-    internet: {
-        type: Boolean
+    isInternet: {
+        type: Boolean,
+        default: false
+    }
+})
+const signatureSchema = new Schema<TApproveConfirm>({
+    date: {
+        type: String
+    },
+    isAgree: {
+        type: Boolean,
+        default: false
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+
     }
 })
 
@@ -88,18 +107,22 @@ const formDataSchema = new Schema<TFormData>({
     domainInformation: {
         type: domainInformationSchema,
     },
-    ipInformation:
+    ipInformation: {
+        type: ipInformationSchema
+    },
+    applicantSignature: {
+        type: signatureSchema
+    },
 
-        createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-},
-    updatedBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-}
+    managerSignature: {
+        type: signatureSchema
+    },
+    itSignature: {
+        type: signatureSchema
+    },
+    itImplement: {
+        type: signatureSchema
+    },
 })
 
 const FormData = model<TFormData>('FormData', formDataSchema)

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-vars */
 
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 export type TAccessType = {
     domainUser: boolean;
     emailAddress: boolean;
@@ -24,14 +24,10 @@ export type TIp = {
 
 }
 
-type TApproveConfirm = {
+export type TApproveConfirm = {
     date: string;
     isAgree: boolean;
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-
-    },
+    userId: Types.ObjectId,
 
 }
 
