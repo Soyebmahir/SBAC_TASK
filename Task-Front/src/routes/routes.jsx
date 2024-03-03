@@ -6,6 +6,7 @@ import MainLayout from "../layout/MainLayout/MainLayout";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 import LoginForm from "../Component/Forms/LoginForm";
+import Status from "../Component/Status/Status";
 
 export const router = createBrowserRouter([
   {
@@ -20,10 +21,10 @@ export const router = createBrowserRouter([
         path: "/form",
         element: <AccessForm />,
       },
-      //   {
-      //     path: "/",
-      //     element: <Home />,
-      //   },
+      {
+        path: "/status",
+        element: <Status />,
+      },
       //   {
       //     path: "/home",
       //     element: <Home />,

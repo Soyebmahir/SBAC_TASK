@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getTodayDate } from "../../utils/date";
 import SubmitButton from "../button/SubmitButton";
 import { baseURL } from "../../Configs/libs";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const AccessForm = () => {
+  const { user } = useContext(AuthContext);
+  // console.log(user);
   const [accessCheckboxes, setAccessCheckboxes] = useState({
     ["Domain User"]: true,
     ["Email Address"]: false,
@@ -16,6 +20,7 @@ const AccessForm = () => {
   const [isApplicantSign, setIsApplicantSign] = useState({
     sign: false,
     date: getTodayDate(),
+    userId: user._id,
   });
 
   const [restInput, setRestInput] = useState({
@@ -100,7 +105,7 @@ const AccessForm = () => {
       applicantSignature: {
         date: getTodayDate(),
         isAgree: isApplicantSign.sign,
-        userId: "65e458cdcc4ba5c26d3868ae",
+        userId: user._id,
       },
     };
     console.log(reformData);
@@ -115,7 +120,9 @@ const AccessForm = () => {
       });
 
       const result = await response.json();
-
+      if (result.success) {
+        toast(result.message);
+      }
       console.log("Success:", result);
     } catch (error) {
       console.error("Error:", error.message);

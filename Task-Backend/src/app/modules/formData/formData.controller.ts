@@ -14,6 +14,37 @@ const createFormData = catchAsync(async (req, res) => {
         data: result,
     });
 });
+const getAllFormData = catchAsync(async (req, res) => {
+    const result = await formDataServices.allFormDataGetFromDb()
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Found all Form Data  SuccessFully',
+        data: result,
+    });
+})
+const formDataGetByUserId = catchAsync(async (req, res) => {
+    const result = await formDataServices.allFormDataGetByUserIdFromDB(req.params.userId)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Found all FormData of the user SuccessFully',
+        data: result,
+    });
+})
+const formDataGetById = catchAsync(async (req, res) => {
+    const result = await formDataServices.formDataSingleById(req.params.id)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Found Single FormData by Id SuccessFully',
+        data: result,
+    });
+})
 export const formDataController = {
-    createFormData
+    createFormData,
+    getAllFormData,
+    formDataGetByUserId,
+    formDataGetById
+
 }

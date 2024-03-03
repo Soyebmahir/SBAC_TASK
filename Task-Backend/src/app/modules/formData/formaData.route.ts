@@ -11,6 +11,10 @@ import { formDataValidations } from './formData.validator';
 const router = Router();
 
 router.route('/').post(validateRequest(formDataValidations.formDataValidationSchema), formDataController.createFormData);
+router.route('/').get(formDataController.getAllFormData)
+router.route('/:userId').get(formDataController.formDataGetByUserId)
+router.route('/data/:id/').get(formDataController.formDataGetById)
+
 
 // router.route('/').get();
 
