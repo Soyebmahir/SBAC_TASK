@@ -17,10 +17,15 @@ const formDataSingleById = async (id: string) => {
     const result = await FormData.findById(id)
     return result
 }
+const updateFormDataById = async (id: string, payload: TFormData) => {
+    const result = await FormData.findByIdAndUpdate(id, payload)
+    return result
+}
 export const formDataServices = {
     createFormDataIntoDb,
     allFormDataGetFromDb,
     allFormDataGetByUserIdFromDB,
-    formDataSingleById
+    formDataSingleById,
+    updateFormDataById
 
 }

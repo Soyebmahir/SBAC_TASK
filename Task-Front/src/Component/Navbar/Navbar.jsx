@@ -64,39 +64,25 @@ const Navbar = () => {
               </NavLink>
             </li>
           )}
+          {user?.role !== "normalUser" && (
+            <li>
+              <NavLink
+                to={"access-request"}
+                className={({ isActive }) =>
+                  isActive
+                    ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
+                    : "  "
+                }
+                style={{
+                  fontSize: "16px",
+                  fontFamily: "Helvetica-W01-Light, Helvetica-W02-Light, ",
+                }}
+              >
+                Access Request
+              </NavLink>
+            </li>
+          )}
 
-          <li>
-            <NavLink
-              to={"Manager"}
-              className={({ isActive }) =>
-                isActive
-                  ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
-                  : "  "
-              }
-              style={{
-                fontSize: "16px",
-                fontFamily: "Helvetica-W01-Light, Helvetica-W02-Light, ",
-              }}
-            >
-              Manager
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={"it"}
-              className={({ isActive }) =>
-                isActive
-                  ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
-                  : "  "
-              }
-              style={{
-                fontSize: "16px",
-                fontFamily: "Helvetica-W01-Light, Helvetica-W02-Light, ",
-              }}
-            >
-              IT
-            </NavLink>
-          </li>
           {user.email && <button onClick={logOut}>Logout</button>}
         </ul>
       </div>

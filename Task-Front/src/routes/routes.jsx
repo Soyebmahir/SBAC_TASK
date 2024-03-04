@@ -7,6 +7,8 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 import LoginForm from "../Component/Forms/LoginForm";
 import Status from "../Component/Status/Status";
+import ShowDetails from "../Component/ShowDetails/ShowDetails";
+import AccessRequest from "../pages/AccessRequest/AccessRequest";
 
 export const router = createBrowserRouter([
   {
@@ -25,10 +27,14 @@ export const router = createBrowserRouter([
         path: "/status",
         element: <Status />,
       },
-      //   {
-      //     path: "/home",
-      //     element: <Home />,
-      //   },
+      {
+        path: "/form_edit/:id",
+        element: <ShowDetails />,
+      },
+      {
+        path: "/access-request",
+        element: <AccessRequest />,
+      },
     ],
   },
   {

@@ -41,10 +41,20 @@ const formDataGetById = catchAsync(async (req, res) => {
         data: result,
     });
 })
+const updateFormData = catchAsync(async (req, res) => {
+    const result = await formDataServices.updateFormDataById(req.params.id, req.body)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Update Single FormData by Id SuccessFully',
+        data: result,
+    });
+})
 export const formDataController = {
     createFormData,
     getAllFormData,
     formDataGetByUserId,
-    formDataGetById
+    formDataGetById,
+    updateFormData
 
 }
