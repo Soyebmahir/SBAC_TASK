@@ -9,6 +9,8 @@ import LoginForm from "../Component/Forms/LoginForm";
 import Status from "../Component/Status/Status";
 import ShowDetails from "../Component/ShowDetails/ShowDetails";
 import AccessRequest from "../pages/AccessRequest/AccessRequest";
+import RegistrationForm from "../Component/Forms/RegistrationForm";
+import Home from "../pages/Home/Home";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +21,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "/form",
         element: <AccessForm />,
@@ -40,5 +46,9 @@ export const router = createBrowserRouter([
   {
     path: "/sign-in",
     element: <LoginForm />,
+  },
+  {
+    path: "/register",
+    element: <RegistrationForm />,
   },
 ]);

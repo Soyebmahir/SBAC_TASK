@@ -9,29 +9,28 @@ const AccessForm = () => {
   const { user } = useContext(AuthContext);
   // console.log(user);
   const [accessCheckboxes, setAccessCheckboxes] = useState({
-    ["Domain User"]: true,
+    ["Domain User"]: false,
     ["Email Address"]: false,
     ["Internet Access"]: false,
     ["USB Access"]: false,
   });
-  const [isDomainChecked, setIsDomainChecked] = useState(true);
+  const [isDomainChecked, setIsDomainChecked] = useState(false);
   const [isEmailChecked, setIsEmailChecked] = useState(false);
   const [isInternetChecked, setIsInternetChecked] = useState(false);
   const [isApplicantSign, setIsApplicantSign] = useState({
-    sign: false,
+    isAgree: false,
     date: getTodayDate(),
     userId: user._id,
   });
 
   const [restInput, setRestInput] = useState({
-    employeeId: "EMP-1122",
-    contactNumber: "01645249676",
-    firstName: "Soyeb",
-    lastName: "Mohammad",
-    office: "Account",
-    designation: "Accountant",
-    justification:
-      "I am requesting access to the domain to enhance my workflow and collaboration capabilities within our organization. With domain access, I will be able to seamlessly connect to shared resources, including files, applications, and collaborative tools, facilitating efficient communication and teamwork.",
+    employeeId: "",
+    contactNumber: "",
+    firstName: "",
+    lastName: "",
+    office: "",
+    designation: "",
+    justification: "",
     ipAddress: "103.24.88.24",
     subnetMask: "255.255.255.0",
     defaultGetWay: "192.168.0.1",
@@ -55,7 +54,7 @@ const AccessForm = () => {
     setIsInternetChecked(!isInternetChecked);
   };
   const handleIsApplicantSign = (sign) => {
-    setIsApplicantSign({ ...isApplicantSign, ["sign"]: sign });
+    setIsApplicantSign({ ...isApplicantSign, ["isAgree"]: sign });
   };
 
   // common function to get restInput data
@@ -104,7 +103,7 @@ const AccessForm = () => {
       },
       applicantSignature: {
         date: getTodayDate(),
-        isAgree: isApplicantSign.sign,
+        isAgree: isApplicantSign.isAgree,
         userId: user._id,
       },
     };

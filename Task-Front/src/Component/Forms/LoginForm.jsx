@@ -13,7 +13,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/categories";
+  const from = location?.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -110,7 +110,23 @@ const LoginForm = () => {
             Login
           </button>
         </Field>
-        <NavLink to={"/register"}>No Account ? Register !</NavLink>
+        {/* <NavLink to={"/register"}>No Account ? Register !</NavLink> */}
+        <span>
+          No Account ?{" "}
+          <NavLink
+            to={"/register"}
+            className={({ isActive }) =>
+              isActive
+                ? "active text-[#8d2713] hover:text-gray-600 transition-colors duration-700 ease-in-out "
+                : " hover:text-yellow-600 font-bold duration-700 "
+            }
+            style={{
+              fontSize: "16px",
+            }}
+          >
+            Register Please
+          </NavLink>
+        </span>
       </form>
     </div>
   );
